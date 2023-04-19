@@ -68,10 +68,14 @@ ui <- fluidPage(
                         max =  as.numeric(0.99),
                         value = as.numeric(0),
                         # round = FALSE,
-                        step = 0.10)
+                        step = 0.10),            
             
-            #,            htmlOutput("armamodel")
+            tags$div(HTML("<span style='text-decoration: none; font-size: 12pt; margin-top: 25pt'> $$ *\\mu \\text{ is set to 0 in this example}$$ <span> <script>if (window.MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub]);</script>"))
+            
 
+            
+            
+            
         ),
         
         # Main panel for displaying outputs ----
@@ -112,9 +116,14 @@ server <- function(input, output) {
         
         try( y.sim <- arima.sim(n = tt, model = list(ar = c(ar1, ar2), ma = c(ma1, ma2)),
                                 rand.gen = function(n, ...) {rnorm(tt, 0, sd)}), silent = TRUE)
-    
+        
+        if (!is.null(y.sim)) {
+            return(y.sim)
+        } else {
+            return(NULL)
+        }
+        
         })
-    
     
     
     #..................................................
@@ -123,12 +132,25 @@ server <- function(input, output) {
     # Plot 1:  ----
     output$tsplot <- renderPlot({
         
-        Arma <- Arma()
-        
-        plot(Arma, xlab = "tt", ylab = "Value",
-             ylim=c(-4,4))
-        abline(a = 0, b = 0, col = "red")
-
+        if (!is.null(Arma())) {
+            plot(Arma(), xlab = "tt", ylab = "Value",
+                 ylim=c(-4,4))
+            abline(a = 0, b = 0, col = "red")
+            
+        } else {
+            plot(x = 0:1, # Create empty plot
+                 y = 0:1,
+                 ann = F,
+                 bty = "n",
+                 type = "n",
+                 xaxt = "n",
+                 yaxt = "n")
+            text(x = 0.5, # Add text to empty plot
+                 y = 0.5,
+                 # "This is my first line of text!\nAnother line of text.\n(Created by Base R)", 
+                 "Choose a stable ARMA process \n to display the time series",
+                 cex = 2)
+        }
     }, height = 400)
     
     #..................................................
@@ -152,18 +174,46 @@ server <- function(input, output) {
     # Plot 3:  ----
     output$acfplot <- renderPlot({
         
-        Arma <- Arma()
-        
-        Acf(Arma)
+        if (!is.null(Arma())) {
+            Acf(Arma())
+            
+        } else {
+            plot(x = 0:1, # Create empty plot
+                 y = 0:1,
+                 ann = F,
+                 bty = "n",
+                 type = "n",
+                 xaxt = "n",
+                 yaxt = "n")
+            text(x = 0.5, # Add text to empty plot
+                 y = 0.5,
+                 # "This is my first line of text!\nAnother line of text.\n(Created by Base R)", 
+                 "Choose a stable ARMA process \n to display the acf",
+                 cex = 2)
+        }
         
     }, height = 400)
     
     # Plot 3:  ----
     output$pacfplot <- renderPlot({
         
-        Arma <- Arma()
-        
-        Pacf(Arma)
+        if (!is.null(Arma())) {
+            Pacf(Arma())
+            
+        } else {
+            plot(x = 0:1, # Create empty plot
+                 y = 0:1,
+                 ann = F,
+                 bty = "n",
+                 type = "n",
+                 xaxt = "n",
+                 yaxt = "n")
+            text(x = 0.5, # Add text to empty plot
+                 y = 0.5,
+                 # "This is my first line of text!\nAnother line of text.\n(Created by Base R)", 
+                 "Choose a stable ARMA process \n to display the pacf",
+                 cex = 2)
+        }
         
     }, height = 400)
     
@@ -263,11 +313,20 @@ server <- function(input, output) {
     
     output$generalformula <- renderText({
         paste0("<span style='text-decoration: none; font-size: 14pt'> 
-                   $$\\begin{align*} y_t = \\mu + \\phi_1y_{t-1} + ... + \\phi_py_{t-p} + \\varepsilon_t
+                   $$\\begin{align*} y_t = \\mu^* + \\phi_1y_{t-1} + ... + \\phi_py_{t-p} + \\varepsilon_t
                     + \\theta_1\\varepsilon_{t-1} + ... + \\theta_q\\varepsilon_{t-q} \\end{align*}$$
                    <span> <script>if (window.MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub]);</script>")
         
     })
+    
+    
+    output$muiszero <- renderText({
+        paste0("<span style='text-decoration: none; font-size: 12pt; margin-top: 25pt'> 
+                   $$ *\\mu \\text{ is set to 0 in this example}$$ 
+                   <span> <script>if (window.MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub]);</script>")
+    })
+    
+    
     
 }
 
