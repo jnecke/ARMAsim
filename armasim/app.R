@@ -148,7 +148,7 @@ server <- function(input, output) {
             text(x = 0.5, # Add text to empty plot
                  y = 0.5,
                  # "This is my first line of text!\nAnother line of text.\n(Created by Base R)", 
-                 "Choose a stable ARMA process \n to display the time series",
+                 "Choose a stable ARMA specification \n to display the time series",
                  cex = 2)
         }
     }, height = 400)
@@ -161,6 +161,7 @@ server <- function(input, output) {
         ar2 <- input$ar2
         
         plot(1/polyroot(c(1,-c(ar1,ar2))),
+             col = "red", cex = 1.5, lwd = 3,
              ylim=c(-1.5,1.5),xlim=c(-1.5,1.5),
              xlab = c("Real Part"),
              ylab = c("Imaginary Part"),
@@ -175,7 +176,7 @@ server <- function(input, output) {
     output$acfplot <- renderPlot({
         
         if (!is.null(Arma())) {
-            Acf(Arma())
+            Acf(Arma(), main="Autocorrelation function")
             
         } else {
             plot(x = 0:1, # Create empty plot
@@ -188,7 +189,7 @@ server <- function(input, output) {
             text(x = 0.5, # Add text to empty plot
                  y = 0.5,
                  # "This is my first line of text!\nAnother line of text.\n(Created by Base R)", 
-                 "Choose a stable ARMA process \n to display the acf",
+                 "Choose a stable ARMA specification \n to display the acf",
                  cex = 2)
         }
         
@@ -198,7 +199,7 @@ server <- function(input, output) {
     output$pacfplot <- renderPlot({
         
         if (!is.null(Arma())) {
-            Pacf(Arma())
+            Pacf(Arma(), main="Partial autocorrelation function")
             
         } else {
             plot(x = 0:1, # Create empty plot
@@ -211,7 +212,7 @@ server <- function(input, output) {
             text(x = 0.5, # Add text to empty plot
                  y = 0.5,
                  # "This is my first line of text!\nAnother line of text.\n(Created by Base R)", 
-                 "Choose a stable ARMA process \n to display the pacf",
+                 "Choose a stable ARMA specification \n to display the pacf",
                  cex = 2)
         }
         
@@ -318,14 +319,7 @@ server <- function(input, output) {
                    <span> <script>if (window.MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub]);</script>")
         
     })
-    
-    
-    output$muiszero <- renderText({
-        paste0("<span style='text-decoration: none; font-size: 12pt; margin-top: 25pt'> 
-                   $$ *\\mu \\text{ is set to 0 in this example}$$ 
-                   <span> <script>if (window.MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub]);</script>")
-    })
-    
+
     
     
 }
