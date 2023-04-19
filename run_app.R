@@ -76,15 +76,16 @@ run_app <- function (url = "https://github.com/jnecke/ARMAsim/archive/refs/heads
             appdir <- file.path(appdir, subdir)
       }
       
-      # # runApp(appdir, ...)
       # runApp(appdir)
       
       # file.path <- file.path(appdir, "ShinyDocument.rmd")
-      file.path <- file.path(appdir, "IllustrationCLT_ShinyApplication/ShinyDocument.rmd")
+      file.path <- file.path(appdir, "armasim")
       file.path
       
-      rmarkdown::run(file = file.path,
-                     shiny_args = list(launch.browser = TRUE))
+      # rmarkdown::run(file = file.path,
+      #                shiny_args = list(launch.browser = TRUE))
+      shiny::runApp(appDir = file.path,
+                    launch.browser = TRUE)
       
       unlink(fileDir, recursive = TRUE)
       
