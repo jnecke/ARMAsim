@@ -8,16 +8,47 @@ library(plotrix)
 # Define UI for app that draws a histogram ----
 ui <- fluidPage(
     
+    tags$link(rel="stylesheet", type="text/css", href="app.css"),
+      
+    tags$div(HTML("
+                  
+                  <div class='logos''>
+                  <br />
+                        <img src='Uni-Hohenheim-Logo-Weiss-EN.png' width='727' height='188' />
+                        <br />
+                        <p> Econometrics and Statistics (520K) </p>
+                  </div>
+                  
+                  ")),
+    
+    tags$hr(),
+    
+    tags$div(HTML("<h1 class = 'title'>
+                  Time Series Econometrics
+                  </h1>")),
+    
+    tags$hr(),
+    
+    tags$div(HTML("<h1 class = 'subtitle'>
+                  Practical Class (Summer 2023)
+                  </h1>")),
+    
+    tags$div(HTML("<h4 class = 'author'>
+                  <em>by Jan Ecke and Markus Mößler</em>
+                  </h4>")),
+      
+    tags$hr(),
+    
     sidebarLayout(
         
         sidebarPanel(
             
             # tags$hr(),
             # tags$h3("Change the inputs"),
-            tags$div(HTML("<span style='margin-top: 25pt; font-size: 18pt'>Specification</span>")),
-            p("of an ARMA(p,q):", 
-              style = "font-size:14pt; text-align: justify"),
-            p("General formula:", 
+            tags$div(HTML("<span style='margin-top: 25pt; font-size: 18pt'>Specification: ARMA(p,q)</span>")),
+            # p("of an ARMA(p,q):", 
+            #   style = "font-size:14pt; text-align: justify"),
+            p("General model:", 
               style = "font-size:14pt; text-align: justify"),
             htmlOutput("generalformula"),
             htmlOutput("armamodel"),
