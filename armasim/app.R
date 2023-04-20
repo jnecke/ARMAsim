@@ -98,7 +98,6 @@ server <- function(input, output) {
     
     # Simulate ARMA -------
 
-    
     Arma <- reactive({
         # Simulate one trajectory here
         tt <- 200     # number of relalizations
