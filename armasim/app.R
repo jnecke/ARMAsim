@@ -1,4 +1,5 @@
 
+
 library(shiny)
 library(scales)
 library(forecast)
@@ -20,7 +21,7 @@ ui <- fluidPage(
               style = "font-size:14pt; text-align: justify"),
             htmlOutput("generalformula"),
             #htmlOutput("armamodel"),
-    
+            
             tags$div(HTML("<span style='margin-top: 25pt; font-size: 18pt'>Change Parameters</span>")),
             
             
@@ -97,7 +98,7 @@ ui <- fluidPage(
 server <- function(input, output) {
     
     # Simulate ARMA -------
-
+    
     Arma <- reactive({
         # Simulate one trajectory here
         tt <- 200     # number of relalizations
@@ -122,7 +123,7 @@ server <- function(input, output) {
             return(NULL)
         }
         
-        })
+    })
     
     
     #..................................................
@@ -318,7 +319,7 @@ server <- function(input, output) {
                    <span> <script>if (window.MathJax) MathJax.Hub.Queue(['Typeset', MathJax.Hub]);</script>")
         
     })
-
+    
     
     
 }
