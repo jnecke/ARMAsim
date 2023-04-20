@@ -32,8 +32,8 @@ ui <- fluidPage(
                         label = withMathJax(
                             '\\( \\phi_1\\)'
                         ),
-                        min = as.numeric(-0.99),
-                        max =  as.numeric(0.99),
+                        min = as.numeric(-1),
+                        max =  as.numeric(1),
                         value = as.numeric(0),
                         # round = FALSE,
                         step = 0.10),
@@ -42,8 +42,8 @@ ui <- fluidPage(
                         label = withMathJax(
                             '\\( \\phi_2\\)'
                         ),
-                        min = as.numeric(-0.99),
-                        max =  as.numeric(0.99),
+                        min = as.numeric(-1),
+                        max =  as.numeric(1),
                         value = as.numeric(0),
                         # round = FALSE,
                         step = 0.10),
@@ -55,8 +55,8 @@ ui <- fluidPage(
                         label = withMathJax(
                             '\\( \\theta_1\\)'
                         ),
-                        min = as.numeric(-0.99),
-                        max =  as.numeric(0.99),
+                        min = as.numeric(-1),
+                        max =  as.numeric(1),
                         value = as.numeric(0),
                         # round = FALSE,
                         step = 0.10),
@@ -65,8 +65,8 @@ ui <- fluidPage(
                         label = withMathJax(
                             '\\( \\theta_2\\)'
                         ),
-                        min = as.numeric(-0.99),
-                        max =  as.numeric(0.99),
+                        min = as.numeric(-1),
+                        max =  as.numeric(1),
                         value = as.numeric(0),
                         # round = FALSE,
                         step = 0.10),            
@@ -117,7 +117,7 @@ server <- function(input, output) {
         try( y.sim <- arima.sim(n = tt, model = list(ar = c(ar1, ar2), ma = c(ma1, ma2)),
                                 rand.gen = function(n, ...) {rnorm(tt, 0, sd)}), silent = TRUE)
         
-        if (!is.null(y.sim)) {
+        if (!is.null(y.sim) && !is.na(y.sim)) {
             return(y.sim)
         } else {
             return(NULL)
